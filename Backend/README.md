@@ -12,6 +12,8 @@ mvn spring-boot:run
 
 The API listens on `http://localhost:8080`. The Vite frontend proxies `/api` requests to it.
 
+For a deployed frontend, set `FRONTEND_ORIGIN` to its exact HTTPS origin so browser requests pass CORS checks. It defaults to `http://localhost:5173` for local development.
+
 Hibernate updates the `patients` table schema at startup. The database must be running and reachable at `localhost:5432`.
 
 ## Endpoints

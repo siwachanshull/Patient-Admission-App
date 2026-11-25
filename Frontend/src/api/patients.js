@@ -1,8 +1,10 @@
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/+$/, "");
+
 async function request(path, options = {}) {
   let response;
 
   try {
-    response = await fetch(path, {
+    response = await fetch(`${API_BASE_URL}${path}`, {
       ...options,
       headers: {
         ...(options.body ? { "Content-Type": "application/json" } : {}),
@@ -10,7 +12,7 @@ async function request(path, options = {}) {
       },
     });
   } catch {
-    throw new Error("Cannot connect to the patient API. Start the backend on port 8080 and try again.");
+    throw new Error("Cannot connect to the patient API. Check the backend service and try again.");
   }
 
   if (!response.ok) {

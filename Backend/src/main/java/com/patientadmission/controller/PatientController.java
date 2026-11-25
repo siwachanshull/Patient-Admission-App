@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/patients")
-@CrossOrigin(origins = {"http://localhost:5173", "http://127.0.0.1:5173"})
+@CrossOrigin(origins = {"${FRONTEND_ORIGIN:http://localhost:5173}", "http://127.0.0.1:5173"})
 public class PatientController {
     private final PatientService patientService;
 

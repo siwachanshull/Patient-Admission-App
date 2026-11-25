@@ -11,6 +11,8 @@ npm run dev
 
 Start the backend first in another terminal from `../Backend` with `mvn spring-boot:run`. Create a production build with `npm run build`.
 
+For a Render static site, set `VITE_API_BASE_URL` to the backend service URL, run `npm install && npm run build`, and publish `dist`. Leave the variable unset locally to use Vite's `/api` proxy.
+
 ## Included workflows
 
 - Add and edit patient admission details
