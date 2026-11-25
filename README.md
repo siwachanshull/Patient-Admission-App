@@ -96,3 +96,7 @@ Open the Vite URL shown in the terminal, usually `http://localhost:5173`. During
 The root [`netlify.toml`](./netlify.toml) configures the frontend build: Netlify uses `Frontend` as the base directory, runs `npm install && npm run build`, publishes `dist`, and sets `VITE_API_BASE_URL` to the Render backend URL.
 
 The backend requires `DB_URL`, `DB_USERNAME`, and `DB_PASSWORD` in its hosting environment. Set `FRONTEND_ORIGIN` to `https://patient-admission-app-tecq.netlify.app` so browsers allow the deployed frontend to call the API. The hosting platform provides `PORT`.
+
+
+
+Screen Shot- https://github.com/user-attachments/assets/a031663f-1ce6-43ac-a6cb-3bac48dc7a91
