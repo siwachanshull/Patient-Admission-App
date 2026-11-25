@@ -17,4 +17,4 @@ npm install
 npm run dev
 ```
 
-The React app uses the Spring Boot REST API at `/api/patients`. The current backend uses an in-memory repository seeded with sample records; data is lost when the backend restarts. Replace the repository implementation with a database-backed repository when a database is added.
+The React app uses the Spring Boot REST API at `/api/patients`. The backend stores patient records in PostgreSQL. Create the `patient_db` database and set the `DB_PASSWORD` environment variable before starting the backend; patient records persist across restarts.

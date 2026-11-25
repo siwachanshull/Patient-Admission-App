@@ -12,11 +12,11 @@ export const patientFormOptions = {
   ],
   departments: ["Cardiology", "Neurology", "Orthopedics", "Oncology", "Emergency", "General Medicine"],
   doctors: [
-    "Dr. Leslie Alexander",
-    "Dr. Courtney Henry",
-    "Dr. Cameron Williamson",
-    "Dr. Darlene Robertson",
-    "Dr. Taylor Reed",
+    "Dr. Hathi",
+    "Dr. Gupta",
+    "Dr. Komal",
+    "Dr. Aman",
+    "Dr. Lala",
   ],
   statuses: ["Admitted", "Discharged"],
 };

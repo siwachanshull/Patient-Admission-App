@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -20,8 +21,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@SpringBootTest(properties = "spring.datasource.url=${DB_URL:jdbc:postgresql://localhost:5432/patient_db}")
 @AutoConfigureMockMvc
+@Transactional
 class PatientControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
@@ -40,13 +42,13 @@ class PatientControllerIntegrationTest {
         Patient created = objectMapper.readValue(createResult.getResponse().getContentAsString(), Patient.class);
 
         PatientRequest updateRequest = request("Updated API Test Patient", "Admitted");
-        mockMvc.perform(put("/api/patients/{id}", created.id())
+        mockMvc.perform(put("/api/patients/{id}", created.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updateRequest)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Updated API Test Patient"));
 
-        mockMvc.perform(patch("/api/patients/{id}/discharge", created.id()))
+        mockMvc.perform(patch("/api/patients/{id}/discharge", created.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("Discharged"));
 
@@ -58,11 +60,11 @@ class PatientControllerIntegrationTest {
                         .param("status", "Discharged"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].id").value(created.id()));
+                .andExpect(jsonPath("$[0].id").value(created.getId()));
 
-        mockMvc.perform(delete("/api/patients/{id}", created.id()))
+        mockMvc.perform(delete("/api/patients/{id}", created.getId()))
                 .andExpect(status().isNoContent());
-        mockMvc.perform(get("/api/patients/{id}", created.id()))
+        mockMvc.perform(get("/api/patients/{id}", created.getId()))
                 .andExpect(status().isNotFound());
     }
 

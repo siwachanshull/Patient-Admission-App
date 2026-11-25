@@ -1,16 +1,7 @@
 package com.patientadmission.repository;
 
 import com.patientadmission.model.Patient;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-import java.util.Optional;
-
-public interface PatientRepository {
-    List<Patient> findAll();
-
-    Optional<Patient> findById(String id);
-
-    Patient save(Patient patient);
-
-    void deleteById(String id);
+public interface PatientRepository extends JpaRepository<Patient, String> {
 }

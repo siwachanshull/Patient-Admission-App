@@ -8,12 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.UUID;
 
 @Service
 public class PatientService {
     private final PatientRepository patientRepository;
-    private final AtomicLong idSequence = new AtomicLong(2048);
 
     public PatientService(PatientRepository patientRepository) {
         this.patientRepository = patientRepository;
@@ -21,11 +20,11 @@ public class PatientService {
 
     public List<Patient> findPatients(String name, String ward, String department, String doctor, String status) {
         return patientRepository.findAll().stream()
-                .filter(patient -> containsIgnoreCase(patient.name(), name))
-                .filter(patient -> isBlank(ward) || patient.ward().startsWith(ward.trim()))
-                .filter(patient -> equalsIgnoreCase(patient.department(), department))
-                .filter(patient -> equalsIgnoreCase(patient.doctor(), doctor))
-                .filter(patient -> equalsIgnoreCase(patient.status(), status))
+                .filter(patient -> containsIgnoreCase(patient.getName(), name))
+                .filter(patient -> isBlank(ward) || patient.getWard().startsWith(ward.trim()))
+                .filter(patient -> equalsIgnoreCase(patient.getDepartment(), department))
+                .filter(patient -> equalsIgnoreCase(patient.getDoctor(), doctor))
+                .filter(patient -> equalsIgnoreCase(patient.getStatus(), status))
                 .toList();
     }
 
@@ -35,7 +34,7 @@ public class PatientService {
     }
 
     public Patient createPatient(PatientRequest request) {
-        String id = "PT-%04d".formatted(idSequence.incrementAndGet());
+        String id = "PT-" + UUID.randomUUID();
         return patientRepository.save(toPatient(id, request));
     }
 
@@ -47,14 +46,14 @@ public class PatientService {
     public Patient dischargePatient(String id) {
         Patient patient = findPatient(id);
         Patient discharged = new Patient(
-                patient.id(),
-                patient.name(),
-                patient.age(),
-                patient.gender(),
-                patient.ward(),
-                patient.department(),
-                patient.doctor(),
-                patient.admitted(),
+                patient.getId(),
+                patient.getName(),
+                patient.getAge(),
+                patient.getGender(),
+                patient.getWard(),
+                patient.getDepartment(),
+                patient.getDoctor(),
+                patient.getAdmitted(),
                 "Discharged"
         );
         return patientRepository.save(discharged);

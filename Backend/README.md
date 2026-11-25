@@ -1,16 +1,18 @@
 # Patient Admission API
 
-Spring Boot REST API using MVC controllers, a service layer, and a repository interface. The current repository stores records in memory and loads sample patients at startup; changes are lost when the backend restarts. Replace `InMemoryPatientRepository` with a database-backed implementation when adding a database.
+Spring Boot REST API using MVC controllers, a service layer, and a Spring Data JPA repository. Patient records are stored in PostgreSQL and remain available after the backend restarts.
 
 ## Run locally
 
-Requires Java 17 and Maven.
+Requires Java 17, Maven, and PostgreSQL. Create a database named `patient_db`, then set the `DB_PASSWORD` environment variable to the password for the configured `postgres` user. Set `DB_URL` to use a different JDBC URL.
 
 ```sh
 mvn spring-boot:run
 ```
 
 The API listens on `http://localhost:8080`. The Vite frontend proxies `/api` requests to it.
+
+Hibernate updates the `patients` table schema at startup. The database must be running and reachable at `localhost:5432`.
 
 ## Endpoints
 
